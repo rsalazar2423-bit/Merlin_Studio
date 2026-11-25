@@ -110,96 +110,90 @@ paths:
       requestBody:
         description: Registra la llave de una persona o comercio en el directorio federado de REDEBAN
         content:
-          application/json:
+          'application/json; profile=person':
             schema:
-              oneOf:
-                - $ref: '#/components/schemas/KeySPIPerson'
-                - $ref: '#/components/schemas/KeySPICommerce'
-            examples:
-              Person:
-                summary: Registro llave Persona
-                value:
-                  RequestDateTime: '2025-07-23T22:11:35.652'
-                  Customer:
-                    PartySystemIdentifier: 'ALIAS'
-                    PartyIdentifier: '@pruebas123'
-                    InstructedAgent: "ENT"
-                    SyncAgent: "ENT"
-                    Type: 'PERSON'
-                    Person:
-                      FirstName: 'Mark'
-                      MiddleName: 'Jonh'
-                      FirstSurName: 'Twain'
-                      MiddleSurName: 'Clemens'
-                      DocumentType: 'CC'
-                      DocumentNumber: '1020123455'
-                      DocumentIssuanceDate: '2005-07-18'
-                      PersonContact:
-                        PostalAddress:
-                          Address: 'Cra 20 No. 33 - 15'
-                          PostalCode: '110611'
-                          DaneCode: '11001'
-                          TownName: 'BOGOTA'
-                          Country: 'CO'
-                        MobileNumber: '+573115246996'
-                        Email: 'micorreo@midominio.com'
-                  Product:
-                    Account:
-                      BankId: '0807'
-                      TypeAccount: 'CAHO'
-                      AccountNo: '230040122345'
-                      AgeAccount: '2024-02-28'
-                      AccountScore: '750'
-                  TermsAndConditions: true
-                  
-              Commerce:
-                summary: Registro llave Comercio
-                value:
-                  RequestDateTime: '2025-07-23T22:11:35.652'
-                  Customer:
-                     PartySystemIdentifier: 'ALIAS'
-                     PartyIdentifier: '@pruebas123'
-                     InstructedAgent: "ENT"
-                     SyncAgent: "ENT"
-                     Type: 'COMMERCE'
-                     #: 'ENT'
-                     Commerce:
-                       DocumentType: 'NIT'
-                       DocumentNumber: '1020123455'
-                       MerchantId: '0010203040'
-                  Product:
-                    Account:
-                      ProductID: '42b36e75-e833-4d84-a0f0-ec64482b1a59'
-                      BankId: '0807'
-                      TypeAccount: 'CAHO'
-                      AccountNo: '230040122345'
-                      AgeAccount: '2024-02-28'
-                      AccountScore: '15'
-                  TermsAndConditions: true
-                  ReferencedKey:
-                    TypeReferenceKey: 'DIN'
-                    ExpirationDate: '2025-07-23T22:11:35.652'
-                    NumberUses: '50'
-                    TotalAmount: '84230.13'
-                    References:
-                      - IdReference: 'Ref-ID-1'
-                        PaymentAgreement: '20032145'
-                        Description: '23984328546285967'
-                        Amount: '34230.13'
-                        Currency: 'COP'
-                      - IdReference: 'Ref-ID-X'
-                        PaymentAgreement: '20032145'
-                        Description: '23984328546285999'
-                        Amount: '50000.00'
-                        Currency: 'COP'
-                  ReceivingClient:
-                    IdentificationType: 'NIT'
-                    IdentificationNumber: '900612398'
-                    Name: 'Auros S.A.'
-                  GatewayInfo:
-                    GatewayId: '900753159'
-                    GatewayDocumentType: 'NIT'
-                    GatewayName: 'Pasarela Line S.A.'
+              $ref: '#/components/schemas/KeySPIPerson'
+            example:
+              RequestDateTime: '2025-07-23T22:11:35.652'
+              Customer:
+                PartySystemIdentifier: 'ALIAS'
+                PartyIdentifier: '@pruebas123'
+                InstructedAgent: "ENT"
+                SyncAgent: "ENT"
+                Type: 'PERSON'
+                Person:
+                  FirstName: 'Mark'
+                  MiddleName: 'Jonh'
+                  FirstSurName: 'Twain'
+                  MiddleSurName: 'Clemens'
+                  DocumentType: 'CC'
+                  DocumentNumber: '1020123455'
+                  DocumentIssuanceDate: '2005-07-18'
+                  PersonContact:
+                    PostalAddress:
+                      Address: 'Cra 20 No. 33 - 15'
+                      PostalCode: '110611'
+                      DaneCode: '11001'
+                      TownName: 'BOGOTA'
+                      Country: 'CO'
+                    MobileNumber: '+573115246996'
+                    Email: 'micorreo@midominio.com'
+              Product:
+                Account:
+                  BankId: '0807'
+                  TypeAccount: 'CAHO'
+                  AccountNo: '230040122345'
+                  AgeAccount: '2024-02-28'
+                  AccountScore: '750'
+              TermsAndConditions: true
+          'application/json; profile=commerce':
+            schema:
+              $ref: '#/components/schemas/KeySPICommerce'
+            example:
+              RequestDateTime: '2025-07-23T22:11:35.652'
+              Customer:
+                PartySystemIdentifier: 'ALIAS'
+                PartyIdentifier: '@pruebas123'
+                InstructedAgent: "ENT"
+                SyncAgent: "ENT"
+                Type: 'COMMERCE'
+                Commerce:
+                  DocumentType: 'NIT'
+                  DocumentNumber: '1020123455'
+                  MerchantId: '0010203040'
+              Product:
+                Account:
+                  ProductID: '42b36e75-e833-4d84-a0f0-ec64482b1a59'
+                  BankId: '0807'
+                  TypeAccount: 'CAHO'
+                  AccountNo: '230040122345'
+                  AgeAccount: '2024-02-28'
+                  AccountScore: '15'
+              TermsAndConditions: true
+              ReferencedKey:
+                TypeReferenceKey: 'DIN'
+                ExpirationDate: '2025-07-23T22:11:35.652'
+                NumberUses: '50'
+                TotalAmount: '84230.13'
+                References:
+                  - IdReference: 'Ref-ID-1'
+                    PaymentAgreement: '20032145'
+                    Description: '23984328546285967'
+                    Amount: '34230.13'
+                    Currency: 'COP'
+                  - IdReference: 'Ref-ID-X'
+                    PaymentAgreement: '20032145'
+                    Description: '23984328546285999'
+                    Amount: '50000.00'
+                    Currency: 'COP'
+              ReceivingClient:
+                IdentificationType: 'NIT'
+                IdentificationNumber: '900612398'
+                Name: 'Auros S.A.'
+              GatewayInfo:
+                GatewayId: '900753159'
+                GatewayDocumentType: 'NIT'
+                GatewayName: 'Pasarela Line S.A.'
                    
         required: true
       responses:
