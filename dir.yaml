@@ -1252,20 +1252,43 @@ components:
         PartyIdentifier:
           $ref: '#/components/schemas/PartyIdentifier'      
     keySPI:
-      title: '  '
-      description: Registro de una nueva llave de personas o comercios. 
+      title: keySPI
+      description: Registro de una nueva llave de personas o comercios.
+      oneOf:
+        - $ref: '#/components/schemas/KeySPIPerson'
+        - $ref: '#/components/schemas/KeySPICommerce'
+    KeySPIPerson:
+      title: KeySPIPerson
+      description: Registro de una nueva llave de persona.
       type: object
       required:
         - RequestDateTime
         - Customer
         - Product
-        - AdditionalData
         - TermsAndConditions
       properties:
         RequestDateTime:
           $ref: '#/components/schemas/RequestDateTimeCreateKey'
         Customer:
-          $ref: '#/components/schemas/Customer'
+          $ref: '#/components/schemas/CustomerPerson'
+        Product:
+          $ref: '#/components/schemas/Product'
+        TermsAndConditions:
+          $ref: '#/components/schemas/TermsAndConditions'
+    KeySPICommerce:
+      title: KeySPICommerce
+      description: Registro de una nueva llave de comercio.
+      type: object
+      required:
+        - RequestDateTime
+        - Customer
+        - Product
+        - TermsAndConditions
+      properties:
+        RequestDateTime:
+          $ref: '#/components/schemas/RequestDateTimeCreateKey'
+        Customer:
+          $ref: '#/components/schemas/CustomerCommerce'
         Product:
           $ref: '#/components/schemas/Product'
         TermsAndConditions:
@@ -1790,14 +1813,14 @@ components:
       minLength: 5
       maxLength: 70
       example: Cra 20 No. 33 - 15
-    Customer:
-      title: Customer
+    CustomerPerson:
+      title: CustomerPerson
       type: object
       required:
-      - Type
-      - InstructedAgen
-      - PartySystemIdentifier
-      - PartyIdentifier
+        - Type
+        - PartySystemIdentifier
+        - PartyIdentifier
+        - Person
       properties:
         PartySystemIdentifier:
           $ref: '#/components/schemas/PartySystemIdentifier'
@@ -1808,9 +1831,36 @@ components:
         SyncAgent:
           $ref: '#/components/schemas/SyncAgent'
         Type:
-          $ref: '#/components/schemas/Type'
+          type: string
+          description: Tipo de cliente (Persona)
+          enum:
+            - PERSON
+          example: PERSON
         Person:
           $ref: '#/components/schemas/Person'
+    CustomerCommerce:
+      title: CustomerCommerce
+      type: object
+      required:
+        - Type
+        - PartySystemIdentifier
+        - PartyIdentifier
+        - Commerce
+      properties:
+        PartySystemIdentifier:
+          $ref: '#/components/schemas/PartySystemIdentifier'
+        PartyIdentifier:
+          $ref: '#/components/schemas/PartyIdentifier'
+        InstructedAgent:
+          $ref: '#/components/schemas/InstructedAgent'
+        SyncAgent:
+          $ref: '#/components/schemas/SyncAgent'
+        Type:
+          type: string
+          description: Tipo de cliente (Comercio)
+          enum:
+            - COMMERCE
+          example: COMMERCE
         Commerce:
           $ref: '#/components/schemas/Commerce'
     CustomerUpdate:
