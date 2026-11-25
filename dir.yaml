@@ -112,9 +112,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/keySPI'
+              oneOf:
+                - $ref: '#/components/schemas/KeySPIPerson'
+                - $ref: '#/components/schemas/KeySPICommerce'
             examples:
               Person:
+                summary: Registro llave Persona
                 value:
                   RequestDateTime: '2025-07-23T22:11:35.652'
                   Customer:
@@ -150,6 +153,7 @@ paths:
                   TermsAndConditions: true
                   
               Commerce:
+                summary: Registro llave Comercio
                 value:
                   RequestDateTime: '2025-07-23T22:11:35.652'
                   Customer:
@@ -1258,7 +1262,7 @@ components:
         - $ref: '#/components/schemas/KeySPIPerson'
         - $ref: '#/components/schemas/KeySPICommerce'
     KeySPIPerson:
-      title: KeySPIPerson
+      title: Persona (KeySPIPerson)
       description: Registro de una nueva llave de persona.
       type: object
       required:
@@ -1276,7 +1280,7 @@ components:
         TermsAndConditions:
           $ref: '#/components/schemas/TermsAndConditions'
     KeySPICommerce:
-      title: KeySPICommerce
+      title: Comercio (KeySPICommerce)
       description: Registro de una nueva llave de comercio.
       type: object
       required:
