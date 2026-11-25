@@ -172,6 +172,30 @@ paths:
                       AgeAccount: '2024-02-28'
                       AccountScore: '15'
                   TermsAndConditions: true
+                  ReferencedKey:
+                    TypeReferenceKey: 'DIN'
+                    ExpirationDate: '2025-07-23T22:11:35.652'
+                    NumberUses: '50'
+                    TotalAmount: '84230.13'
+                    References:
+                      - IdReference: 'Ref-ID-1'
+                        PaymentAgreement: '20032145'
+                        Description: '23984328546285967'
+                        Amount: '34230.13'
+                        Currency: 'COP'
+                      - IdReference: 'Ref-ID-X'
+                        PaymentAgreement: '20032145'
+                        Description: '23984328546285999'
+                        Amount: '50000.00'
+                        Currency: 'COP'
+                  ReceivingClient:
+                    IdentificationType: 'NIT'
+                    IdentificationNumber: '900612398'
+                    Name: 'Auros S.A.'
+                  GatewayInfo:
+                    GatewayId: '900753159'
+                    GatewayDocumentType: 'NIT'
+                    GatewayName: 'Pasarela Line S.A.'
                    
         required: true
       responses:
@@ -1246,6 +1270,99 @@ components:
           $ref: '#/components/schemas/Product'
         TermsAndConditions:
           $ref: '#/components/schemas/TermsAndConditions'
+        ReferencedKey:
+          $ref: '#/components/schemas/ReferencedKey'
+        ReceivingClient:
+          $ref: '#/components/schemas/ReceivingClient'
+        GatewayInfo:
+          $ref: '#/components/schemas/GatewayInfo'
+    ReferencedKey:
+      title: ReferencedKey
+      description: Información de llave referenciada. Aplica únicamente para comercios (Customer.Type = COMMERCE).
+      type: object
+      properties:
+        TypeReferenceKey:
+          type: string
+          description: >-
+            Tipo de llave referenciada. |
+              DIN: Dinámica |
+              STA: Estática
+          enum:
+            - DIN
+            - STA
+          example: 'DIN'
+        ExpirationDate:
+          type: string
+          description: Fecha y hora de expiración de la llave referenciada en formato AAAA-MM-DDThh:mm:ss.SSS
+          example: '2025-07-23T22:11:35.652'
+        NumberUses:
+          type: string
+          description: Número de usos permitidos para la llave referenciada
+          example: '50'
+        TotalAmount:
+          type: string
+          description: Monto total asociado a la llave referenciada
+          example: '84230.13'
+        References:
+          type: array
+          description: Lista de referencias de pago asociadas a la llave referenciada
+          items:
+            $ref: '#/components/schemas/ReferenceItem'
+    ReferenceItem:
+      title: ReferenceItem
+      description: Detalle de una referencia asociada a la llave referenciada
+      type: object
+      properties:
+        IdReference:
+          type: string
+          description: Identificador único de la referencia
+          example: 'Ref-ID-1'
+        PaymentAgreement:
+          type: string
+          description: Código del convenio de pago
+          example: '20032145'
+        Description:
+          type: string
+          description: Descripción o número de referencia
+          example: '23984328546285967'
+        Amount:
+          type: string
+          description: Monto de la referencia
+          example: '34230.13'
+        Currency:
+          type: string
+          description: Moneda del monto (código ISO 4217)
+          example: 'COP'
+    ReceivingClient:
+      title: ReceivingClient
+      description: Información del cliente receptor. Aplica únicamente para comercios (Customer.Type = COMMERCE).
+      type: object
+      properties:
+        IdentificationType:
+          $ref: '#/components/schemas/DocumentTypeCommerce'
+        IdentificationNumber:
+          type: string
+          description: Número de identificación del cliente receptor
+          example: '900612398'
+        Name:
+          type: string
+          description: Nombre o razón social del cliente receptor
+          example: 'Auros S.A.'
+    GatewayInfo:
+      title: GatewayInfo
+      description: Información de la pasarela de pagos. Aplica únicamente para comercios (Customer.Type = COMMERCE).
+      type: object
+      properties:
+        GatewayId:
+          type: string
+          description: Número de identificación de la pasarela
+          example: '900753159'
+        GatewayDocumentType:
+          $ref: '#/components/schemas/DocumentTypeCommerce'
+        GatewayName:
+          type: string
+          description: Nombre o razón social de la pasarela
+          example: 'Pasarela Line S.A.'
     Commerce:
       title: Commerce
       required:
@@ -2873,37 +2990,3 @@ components:
 security:
   - Authorization: []
 
-  "ReferencedKey": {
-        "TypeReferenceKey": "DIN",
-        "ExpirationDate": "2025-07-23T22:11:35.652",
-        "NumberUses": “50",
-        "TotalAmount": “84230.13", 
-        "References": [
-            {
-                "IdReference": "Ref-ID-1",
-                "PaymentAgreement": "20032145",
-                "Description": "23984328546285967",
-                "Amount": "34230.13",
-                "Currency": "COP"
-            },
-            ...
-            {
-                "IdReference": "Ref-ID-X",
-                "PaymentAgreement": "20032145",
-                "Description": "23984328546285999",
-                "Amount": "50000.00",
-                "Currency": "COP"
-            }
-        ]
-    },
-   "ReceivingClient": {
-        "IdentificationType": "NIT",
-        "IdentificationNumber": "900612398",
-        "Name": "Auros S.A.",
-    },
-   "GatewayInfo“{
-        "GatewayId": "900753159",
-        "GatewayDocumentType": "NIT",
-        "GatewayName": "Pasarela Line S.A."    
-    }
-}
